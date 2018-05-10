@@ -1,17 +1,15 @@
 <?php
-require_once(__DIR__ . './Classes/Calculator.php');
-require_once(__DIR__ . './Classes/InputFilter.php');
+require_once(__DIR__ . '/Classes/Calculator.php');
+require_once(__DIR__ . '/Classes/InputFilter.php');
 
-$operation = $argv[1] ?? ''; // Get User Input
-$userInput = $argv[2] ?? 0; // Get User Input
-
-Class Test3 {
+Class Task5 {
 	/**
 	 * User Input
 	 */
 	private $input;
+
 	/**
-	 * User Input
+	 * Calculator Operation
 	 */
 	private $operation;
 
@@ -19,7 +17,7 @@ Class Test3 {
 		$this->input = $arg;
 		$this->operation = $operation;
 		$this->inputFilter = new InputFilter();
-		$this->calculator = new Calculator();
+		//$this->calculator = new Calculator();
 		$this->getSum();
 	}
 
@@ -30,11 +28,13 @@ Class Test3 {
 	public function getSum(){
 		try {
 
+            // Validate User Input and Throw exception if invalid
 			$isValid = $this->inputFilter->validate($this->input);
 			if(!$isValid){
 				throw new Exception($this->inputFilter->getError());
 			}
 
+            // Check if the operation is available or not
 			if(!method_exists('Calculator', $this->operation)){
 				throw new Exception('Calculator method does not exists. Possible operations: ' . ucwords(implode(get_class_methods ('Calculator'), ', ')));
 			}
@@ -51,4 +51,7 @@ Class Test3 {
 }
 
 
-$test1 = new Test3($operation, $userInput);
+$operation = $argv[1] ?? ''; // Get User Input
+$userInput = addslashes($argv[2]) ?? 0; // Get User Input
+
+$task5 = new Task5($operation, $userInput);

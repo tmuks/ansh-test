@@ -6,7 +6,7 @@ class InputFilter {
 	private $values = [];
 
 	/**
-	 * Input Values
+	 * Input Error
 	 */
 	private $error = null;
 
@@ -36,7 +36,7 @@ class InputFilter {
 
 				$this->values = $this->_getAllowedValues($values);
 			} else {
-				throw new Exception("\n========================================\nInvalid Input Data. Please try again! \n\nPossible input \\\\;\\\\4;5.	\n\n========================================\n");
+				throw new Exception("\n========================================\nInvalid Input Data. Please try again! \n\nPossible input 4,5.	\n\n========================================\n");
 			}
 			return true;
 		}catch(Exception $e) {
@@ -46,21 +46,29 @@ class InputFilter {
 
 	}
 
-	/**
-	 * Get all the allowed values less than the max value
-	 */
+    /**
+     * Get all the allowed values less than the max value
+     * @param array $values List of array values
+     * @return Valid filtered input arrray
+     */
 	private function _getAllowedValues($values){
 		$maxValue = $this->maxValue;
 		$allowedValues = array_filter($values, function ($v) use ($maxValue) {
-			return $v < $maxValue;
+			return $v <= $maxValue;
 		});
 		return $allowedValues;
 	}
 
+    /**
+     * @return Input Error
+     */
 	public function getError(){
 		return $this->error;
 	}
 
+    /**
+     * @return Array of Input Value
+     */
 	public function getValues(){
 		return $this->values;
 	}

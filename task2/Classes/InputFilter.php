@@ -6,7 +6,7 @@ class InputFilter {
 	private $values = [];
 
 	/**
-	 * Input Values
+	 * Input Error
 	 */
 	private $error = null;
 
@@ -39,12 +39,18 @@ class InputFilter {
 
 	}
 
-	public function getError(){
-		return $this->error;
-	}
+    /**
+     * @return Input Error
+     */
+    public function getError(){
+        return $this->error;
+    }
 
-	public function getValues(){
-		return $this->values;
-	}
+    /**
+     * @return Array of Input Value
+     */
+    public function getValues(){
+        return $this->values;
+    }
 
 }

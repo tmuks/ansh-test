@@ -6,14 +6,9 @@ class InputFilter {
 	private $values = [];
 
 	/**
-	 * Input Values
+	 * Input Error
 	 */
 	private $error = null;
-
-	/**
-	 * Max Input Values
-	 */
-	private $maxValue = 1000;
 
 	public function __construct(){
 
@@ -32,11 +27,10 @@ class InputFilter {
 			if(empty($arg)){
 				$this->values = [0];
 			} else if(preg_match($regex, $arg)){
-				$values = explode(',', $arg);
+                $this->values = explode(',', $arg);
 
-				$this->values = $this->_getAllowedValues($values);
 			} else {
-				throw new Exception("\n========================================\nInvalid Input Data. Please try again! \n\nPossible input \\\\;\\\\4;5.	\n\n========================================\n");
+				throw new Exception("\n========================================\nInvalid Input Data. Please try again! \n\nPossible input 4,5.	\n\n========================================\n");
 			}
 			return true;
 		}catch(Exception $e) {
@@ -46,23 +40,17 @@ class InputFilter {
 
 	}
 
-	/**
-	 * Get all the allowed values less than the max value
-	 */
-	private function _getAllowedValues($values){
-		$maxValue = $this->maxValue;
-		$allowedValues = array_filter($values, function ($v) use ($maxValue) {
-			return $v < $maxValue;
-		});
-		return $allowedValues;
-	}
+    /**
+     * @return Input Error
+     */
+    public function getError(){
+        return $this->error;
+    }
 
-	public function getError(){
-		return $this->error;
-	}
-
-	public function getValues(){
-		return $this->values;
-	}
-
+    /**
+     * @return Array of Input Value
+     */
+    public function getValues(){
+        return $this->values;
+    }
 }
